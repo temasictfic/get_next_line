@@ -6,7 +6,7 @@
 /*   By: sciftci <sciftci@student.42kocaeli.com.tr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 18:36:40 by sciftci           #+#    #+#             */
-/*   Updated: 2022/07/26 12:45:05 by sciftci          ###   ########.fr       */
+/*   Updated: 2022/07/26 21:29:01 by sciftci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,12 @@ char	*ft_get_line(char *str)
 	char	*line;
 
 	i = 0;
-	if (str[0] == '\0')
+	if (!str)
 		return (NULL);
 	while (str[i] != '\n' && str[i])
 		i++;
+	if (str[0] == '\0')
+		return (NULL);
 	line = malloc(sizeof(char) * (i + 2));
 	if (!line)
 		return (NULL);
@@ -32,10 +34,7 @@ char	*ft_get_line(char *str)
 		i++;
 	}
 	if (str[i] == '\n')
-	{
-		line[i] = '\n';
-		i++;
-	}
+		line[i++] = '\n';
 	line[i] = '\0';
 	return (line);
 }
@@ -46,6 +45,8 @@ char	*ft_get_rest(char *str)
 	int		s;
 	char	*rest;
 
+	if (!str)
+		return (NULL);
 	i = 0;
 	while (str[i] != '\n' && str[i])
 		i++;

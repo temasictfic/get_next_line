@@ -6,7 +6,7 @@
 /*   By: sciftci <sciftci@student.42kocaeli.com.tr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 18:39:21 by sciftci           #+#    #+#             */
-/*   Updated: 2022/07/26 12:58:26 by sciftci          ###   ########.fr       */
+/*   Updated: 2022/07/26 21:29:14 by sciftci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,15 +109,15 @@ char	*ft_read_rest(int fd, char *str)
 
 char	*get_next_line(int fd)
 {
-	static char	*rest;
+	static char	*rest[BUFFER_SIZE];
 	char		*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	rest = ft_read_rest(fd, rest);
-	if (!rest)
+	rest[fd] = ft_read_rest(fd, rest[fd]);
+	if (!rest[fd])
 		return (NULL);
-	line = ft_get_line(rest);
-	rest = ft_get_rest(rest);
+	line = ft_get_line(rest[fd]);
+	rest[fd] = ft_get_rest(rest[fd]);
 	return (line);
 }
