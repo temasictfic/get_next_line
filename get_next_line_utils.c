@@ -6,13 +6,13 @@
 /*   By: sciftci <sciftci@student.42kocaeli.com.tr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 18:37:24 by sciftci           #+#    #+#             */
-/*   Updated: 2022/07/26 05:59:30 by sciftci          ###   ########.fr       */
+/*   Updated: 2022/07/26 12:44:49 by sciftci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-size_t	ft_strlen(const char *s)
+size_t	ft_strlen(char *s)
 {
 	size_t	len;
 
@@ -22,7 +22,7 @@ size_t	ft_strlen(const char *s)
 	return (len);
 }
 
-void	*ft_memcpy(void *dst, const void *src, size_t n)
+void	*ft_memcpy(void *dst, void *src, size_t n)
 {
 	size_t	i;
 
@@ -37,12 +37,17 @@ void	*ft_memcpy(void *dst, const void *src, size_t n)
 	return (dst);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char *s1, char *s2)
 {
 	char	*joined_str;
 	size_t	s1_len;
 	size_t	s2_len;
 
+	if (!s1)
+	{
+		s1 = (char *)malloc(1 * sizeof(char));
+		s1[0] = '\0';
+	}
 	if (!s1 || !s2)
 		return (NULL);
 	s1_len = ft_strlen(s1);
@@ -53,5 +58,6 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	ft_memcpy(joined_str, s1, s1_len);
 	ft_memcpy(joined_str + s1_len, s2, s2_len);
 	joined_str[s1_len + s2_len] = '\0';
+	free(s1);
 	return (joined_str);
 }

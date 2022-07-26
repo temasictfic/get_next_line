@@ -6,7 +6,7 @@
 /*   By: sciftci <sciftci@student.42kocaeli.com.tr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 18:36:40 by sciftci           #+#    #+#             */
-/*   Updated: 2022/07/26 05:59:49 by sciftci          ###   ########.fr       */
+/*   Updated: 2022/07/26 12:45:05 by sciftci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,11 @@ char	*ft_get_line(char *str)
 		i++;
 	}
 	if (str[i] == '\n')
+	{
 		line[i] = '\n';
-	line[++i] = '\0';
+		i++;
+	}
+	line[i] = '\0';
 	return (line);
 }
 
@@ -65,10 +68,16 @@ char	*ft_get_rest(char *str)
 
 int	ft_has_newline(char *str)
 {
-	while (*str++)
+	int	i;
+
+	if (!str)
+		return (0);
+	i = 0;
+	while (str[i])
 	{
-		if (*str == '\n')
+		if (str[i] == '\n')
 			return (1);
+		i++;
 	}
 	return (0);
 }
@@ -79,7 +88,9 @@ char	*ft_read_rest(int fd, char *str)
 	char	*buf;
 
 	buf = malloc((BUFFER_SIZE + 1) * sizeof(char));
-	i = 1;
+	if (!buf)
+		return (NULL);
+	read_bytes = 1;
 	while (read_bytes != 0 && !ft_has_newline(str))
 	{
 		read_bytes = read(fd, buf, BUFFER_SIZE);

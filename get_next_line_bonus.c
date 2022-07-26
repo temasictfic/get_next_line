@@ -6,7 +6,7 @@
 /*   By: sciftci <sciftci@student.42kocaeli.com.tr> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 18:39:21 by sciftci           #+#    #+#             */
-/*   Updated: 2022/07/26 05:53:21 by sciftci          ###   ########.fr       */
+/*   Updated: 2022/07/26 12:58:26 by sciftci          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,12 @@ char	*ft_get_line(char *str)
 	char	*line;
 
 	i = 0;
-	if (str[0] == '\0')
+	if (!str)
 		return (NULL);
 	while (str[i] != '\n' && str[i])
 		i++;
+	if (str[0] == '\0')
+		return (NULL);
 	line = malloc(sizeof(char) * (i + 2));
 	if (!line)
 		return (NULL);
@@ -32,8 +34,8 @@ char	*ft_get_line(char *str)
 		i++;
 	}
 	if (str[i] == '\n')
-		line[i] = '\n';
-	line[++i] = '\0';
+		line[i++] = '\n';
+	line[i] = '\0';
 	return (line);
 }
 
@@ -43,6 +45,8 @@ char	*ft_get_rest(char *str)
 	int		s;
 	char	*rest;
 
+	if (!str)
+		return (NULL);
 	i = 0;
 	while (str[i] != '\n' && str[i])
 		i++;
@@ -65,10 +69,16 @@ char	*ft_get_rest(char *str)
 
 int	ft_has_newline(char *str)
 {
-	while (*str++)
+	int	i;
+
+	if (!str)
+		return (0);
+	i = 0;
+	while (str[i])
 	{
-		if (*str == '\n')
+		if (str[i] == '\n')
 			return (1);
+		i++;
 	}
 	return (0);
 }
@@ -79,7 +89,9 @@ char	*ft_read_rest(int fd, char *str)
 	char	*buf;
 
 	buf = malloc((BUFFER_SIZE + 1) * sizeof(char));
-	i = 1;
+	if (!buf)
+		return (NULL);
+	read_bytes = 1;
 	while (read_bytes != 0 && !ft_has_newline(str))
 	{
 		read_bytes = read(fd, buf, BUFFER_SIZE);
